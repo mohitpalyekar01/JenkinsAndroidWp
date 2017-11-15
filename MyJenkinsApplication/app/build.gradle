@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+int MILLIS_IN_MINUTE = 1000 * 60
+int minutesSinceEpoch = System.currentTimeMillis() / MILLIS_IN_MINUTE
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -10,6 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+
     }
     buildTypes {
         release {
@@ -24,17 +30,15 @@ android {
 
     productFlavors {
         customer {
-            minSdkVersion 16
-            applicationId 'com.test.jenkins.customer'
-            targetSdkVersion 26
-            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 1
-            versionName "1.0"
-            dimension "app"
 
+            dimension "app"
+            versionNameSuffix "-customer"
+            applicationIdSuffix '.customer'
+            minSdkVersion 15
+            targetSdkVersion 26
             ext {
-                development = "dev.example.blog"
-                production = "example.blog"
+                development = "customer.development.url"
+                production = "customer.production.url"
             }
 
 
@@ -42,16 +46,14 @@ android {
 
         driver {
             dimension "app"
-            minSdkVersion 16
-            applicationId 'com.test.jenkins.driver'
+            versionNameSuffix "-driver"
+            applicationIdSuffix '.driver'
+            minSdkVersion 15
             targetSdkVersion 26
-            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 1
-            versionName "1.0"
 
             ext {
-                development = "dev.example.blog"
-                production = "example.blog"
+                development = "driver.development.url"
+                production = "driver.production.url"
             }
 
 
@@ -60,13 +62,14 @@ android {
 
         development{
             dimension "environment"
+            applicationIdSuffix '.dev'
 
         }
 
 
         production{
             dimension "environment"
-
+            applicationIdSuffix '.prod'
         }
 
         applicationVariants.all { variant ->
@@ -78,8 +81,27 @@ android {
             variant.buildConfigField "String", "URL", "\"${app[environment.name]}\""
         }
 
+        // The defaultConfig values above are fixed, so your incremental builds don't
+        // need to rebuild the manifest (and therefore the whole APK, slowing build times).
+        // But for release builds, it's okay. So the following script iterates through
+        // all the known variants, finds those that are "release" build types, and
+        // changes those properties to something dynamic.
+        applicationVariants.all { variant ->
+            if (variant.buildType.name == "release") {
+                variant.mergedFlavor.versionCode = minutesSinceEpoch;
+                variant.mergedFlavor.versionName = minutesSinceEpoch + "-" + variant.flavorName;
+            }
+        }
     }
-}
+
+
+    }
+
+
+
+
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
