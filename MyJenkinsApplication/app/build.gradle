@@ -32,8 +32,8 @@ android {
         customer {
 
             dimension "app"
-            versionNameSuffix "-customer"
-            applicationIdSuffix '.customer'
+          //  versionNameSuffix "-customer"
+          //  applicationIdSuffix '.customer'
             minSdkVersion 15
             targetSdkVersion 26
             ext {
@@ -46,8 +46,8 @@ android {
 
         driver {
             dimension "app"
-            versionNameSuffix "-driver"
-            applicationIdSuffix '.driver'
+           // versionNameSuffix "-driver"
+           // applicationIdSuffix '.driver'
             minSdkVersion 15
             targetSdkVersion 26
 
@@ -62,14 +62,14 @@ android {
 
         development{
             dimension "environment"
-            applicationIdSuffix '.dev'
+           // applicationIdSuffix '.dev'
 
         }
 
 
         production{
             dimension "environment"
-            applicationIdSuffix '.prod'
+          //  applicationIdSuffix '.prod'
         }
 
         applicationVariants.all { variant ->
