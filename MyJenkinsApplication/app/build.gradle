@@ -7,7 +7,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.test.jenkins.customer.dev"
+        applicationId "com.test.jenkins"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
