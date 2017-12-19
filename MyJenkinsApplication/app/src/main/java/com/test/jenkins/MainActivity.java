@@ -7,6 +7,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
+
+    //test feature added
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
