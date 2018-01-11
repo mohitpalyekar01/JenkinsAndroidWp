@@ -88,8 +88,8 @@ android {
         // changes those properties to something dynamic.
         applicationVariants.all { variant ->
             if (variant.buildType.name == "release") {
-                variant.mergedFlavor.versionCode = minutesSinceEpoch;
-                variant.mergedFlavor.versionName = minutesSinceEpoch + "-" + variant.flavorName;
+                variant.mergedFlavor.versionCode = (System.getenv("BUILD_NUMBER") as Integer ?: 0)
+                variant.mergedFlavor.versionName = "MyApplication"
             }
         }
     }
