@@ -89,7 +89,7 @@ android {
         applicationVariants.all { variant ->
             if (variant.buildType.name == "release") {
                 variant.mergedFlavor.versionCode = (System.getenv("BUILD_NUMBER") as Integer ?: 0)
-                variant.mergedFlavor.versionName = "MyApplication"
+                variant.mergedFlavor.versionName = "1.0.1"
             }
         }
     }
